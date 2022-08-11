@@ -14,7 +14,7 @@
 insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, user_id) values (10000, '2022-03-10 19:22:33.102', null, '22021','soyapayment95');  
 
 ---------------------------------------------------  
-2. kafka설치  
+2. kafka설치 
 ---------------------------------------------------  
 참고사이트 : http://www.msaschool.io/operation/implementation/implementation-seven/  
 
