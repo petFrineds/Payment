@@ -25,7 +25,7 @@ insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, u
     - 데이터생성(postman사용) : POST http://localhost:8082/payments/   
                               { "reservedId": "202203271311", "userId": "soya95", "amount": "10000", "payDate": "2019-03-10 10:22:33.102" }  
 
-    - 조회 : GET http://localhost:8082/payments/1  
+    - 조회 : GET http://localhost:8080/payments/1  
 
 3) Shop에서 message 받아와 저장 ( 아래 PloycyHandler.java가 실행됨 )  
 
@@ -39,7 +39,7 @@ insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, u
    -config : KafkaProcessor.java, WebConfig.java(CORS적용)  
 --------------------------------------------------  
 5. API  
-   해당ID의 결제내역조회 : GET http://localhost:8082/payments/{userId}   
+   해당ID의 결제내역조회 : GET http://localhost:8080/payments/users/{userId}   
 --------------------------------------------------  
 
 6. swagger추가 : http://localhost:8080/swagger-ui.html
