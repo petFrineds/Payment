@@ -2,24 +2,24 @@ server:
   port: 8080
 ---
 spring:
+  profiles: default
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver #mysql driver
-    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=false
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    hikari:
-      initialization-fail-timeout: 0
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://52.24.172.255:3306/petfriends?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5Dialect
-    generate-ddl: true
-    show-sql: true
     hibernate:
-      ddl-auto: update  
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
   cloud:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: 52.24.172.255:9092
         streams:
           binder:
             configuration:
@@ -35,8 +35,7 @@ spring:
           contentType: application/json
         event-out:
           destination: petfriends
-          contentType: application/json
-
+          contentType: application/json       
 logging:
   level:
     org.hibernate.type: trace
@@ -44,5 +43,3 @@ logging:
       type.descriptor.sql: trace #show parameter binding
       SQL: DEBUG
     org.springframework.cloud: debug
-server:
-  port: 8080
