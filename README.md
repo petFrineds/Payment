@@ -41,3 +41,6 @@ insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, u
 5. API  
    해당ID의 결제내역조회 : GET http://localhost:8082/payments/{userId}   
 --------------------------------------------------  
+
+6. swagger추가 : http://localhost:8080/swagger-ui.html
+
