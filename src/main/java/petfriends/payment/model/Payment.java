@@ -25,19 +25,20 @@ public class Payment {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="pay_id")
-    private Long id;
-    private Long reservedId;
+    private Long id; //table : bigint
+    private String reservedId; //table: VARCHAR(50)
     private String userId;
     private Double amount;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp payDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp refundDate;
     
     @PostPersist
     public void onPostPersist(){
         Payed payed = new Payed();
         BeanUtils.copyProperties(this, payed);
-        payed.publishAfterCommit();
+        payed.publishAfterCommit(); 
         
         try {
                 Thread.currentThread().sleep((long) (400 + Math.random() * 220));
@@ -63,6 +64,14 @@ public class Payment {
 		this.id = id;
 	}
 
+	public String getReservedId() {
+		return reservedId;
+	}
+
+	public void setReservedId(String reservedId) {
+		this.reservedId = reservedId;
+	}
+
 	public Timestamp getPayDate() {
 		return payDate;
 	}
@@ -77,14 +86,6 @@ public class Payment {
 
 	public void setRefundDate(Timestamp refundDate) {
 		this.refundDate = refundDate;
-	}
-
-	public Long getReservedId() {
-		return reservedId;
-	}
-
-	public void setReservedId(Long reservedId) {
-		this.reservedId = reservedId;
 	}
 
 	public String getUserId() {

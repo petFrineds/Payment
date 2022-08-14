@@ -17,6 +17,9 @@ public class PaymentService {
 	 public List<Payment> findAllByUserId(String userId) {
 		 return paymentRepository.findAllByUserId(userId);
 	 } 
-		 
+	 
+	 public Payment pay(Payment payment) {
+		return paymentRepository.save(payment);
+	 }  
 }
 
