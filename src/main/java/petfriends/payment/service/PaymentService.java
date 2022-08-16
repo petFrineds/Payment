@@ -29,14 +29,15 @@ public class PaymentService {
 	 public Payment refund(Long id) {		 
 		 Optional<Payment> pay = paymentRepository.findById(id);
 		 if(pay.isPresent()) {
+			 
 			Payment p = pay.get();
 			p.setPayGubun(PayGubun.REFUND);
-				
-			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-	        //SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss"); 		        
+			
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
 			p.setRefundDate(timestamp);
 			
-			paymentRepository.save(p);
+			return paymentRepository.save(p);
+			
 		}
 		 
 		return null;
