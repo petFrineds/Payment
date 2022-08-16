@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import petfriends.payment.model.Payment;
@@ -33,10 +34,17 @@ import petfriends.payment.service.PaymentService;
 		 return paymentService.pay(payment);
 	 }
 	 
-	 @PutMapping("/payments")
-	 public Payment refund(@Valid @RequestBody Payment payment) {
-		 return paymentService.pay(payment);
+//	 @PutMapping("/payments/{id}")
+//	 	 public Payment refund(@Valid @RequestBody Long id) {
+//		 return paymentService.refund(id);
+//	 }
+	 
+	 @PutMapping("/payments/{id}")
+	 	 public Payment refund(@PathVariable Long id) {
+		 return paymentService.refund(id);
 	 }
+	 
+	 
 	 
  }
 
