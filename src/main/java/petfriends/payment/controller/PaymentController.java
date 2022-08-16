@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import petfriends.payment.model.Payment;
 import petfriends.payment.model.Point;
 import petfriends.payment.service.PaymentService;
-import petfriends.payment.service.PointService;
+
 
  @RestController
  @RequestMapping("/")
@@ -24,9 +24,6 @@ import petfriends.payment.service.PointService;
 
 	 @Autowired
 	 PaymentService paymentService;
-	 
-	 @Autowired
-	 PointService pointService;
 	 
 	 @GetMapping("/payments/users/{userId}")
 	 public List<Payment> findPaymentByUserId(@PathVariable("userId") String userId) {
@@ -44,8 +41,8 @@ import petfriends.payment.service.PointService;
 	 }
 	 
 	 @GetMapping("/points/users/{userId}")
-	 public List<Point> findPointsByUserId(@PathVariable("userId") String userId) {
-		 return pointService.findAllByUserId(userId);
+	 public List<Point> findPointAllByUserId(@PathVariable("userId") String userId) {
+		 return paymentService.findPointAllByUserId(userId);
 	 }
 	 
 	 

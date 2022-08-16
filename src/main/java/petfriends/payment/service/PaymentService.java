@@ -28,6 +28,11 @@ public class PaymentService {
 		 return paymentRepository.findAllByUserId(userId);
 	 } 
 	 
+	 public List<Point> findPointAllByUserId(String userId) {
+		 return pointRepository.findAllByUserId(userId);
+	 } 
+	 
+	 
 	 public Payment pay(Payment payment) {
 		    Payment pay = paymentRepository.save(payment);
 		    
