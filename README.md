@@ -3,13 +3,37 @@
 ---------------------------------------------------
 테이블스페이스 : petfriends
 
-테이블생성 Script: CREATE TABLE payment (   
-  pay_id BIGINT(20) NOT NULL DEFAULT '0',   
-  reserved_id VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',   
-  user_id VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',   
-  amount DOUBLE NULL DEFAULT NULL,   
-  pay_date TIMESTAMP NULL DEFAULT NULL,   
-  refund_date TIMESTAMP NULL DEFAULT NULL ) COLLATE='utf8mb4_general_ci' ENGINE=InnoDB ;  
+테이블생성 Script: CREATE TABLE `payment` ( 
+	`pay_id` BIGINT(20) NOT NULL DEFAULT '0',
+	`reserved_id` BIGINT(20) NULL DEFAULT NULL,
+	`user_id` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`user_name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`pay_type` ENUM('CARD','POINT') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`pay_gubun` ENUM('PAY','REFUND') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`card_number` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`amount` DOUBLE NULL DEFAULT NULL,
+	`pay_date` TIMESTAMP NULL DEFAULT NULL,
+	`refund_date` TIMESTAMP NULL DEFAULT NULL
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `point` (
+	`point_id` BIGINT(20) NULL DEFAULT NULL,
+	`payment_id` BIGINT(20) NULL DEFAULT NULL,
+	`reserved_id` BIGINT(20) NULL DEFAULT NULL,
+	`user_id` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`user_name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`point_gubun` ENUM('PAY','EARN','REFUND') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`point` DOUBLE NULL DEFAULT NULL,
+	`current_point` DOUBLE NULL DEFAULT NULL,
+	`create_date` TIMESTAMP NULL DEFAULT NULL
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
 
 insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, user_id) values (10000, '2022-03-10 19:22:33.102', null, '22021','soyapayment95');  
 

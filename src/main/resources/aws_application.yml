@@ -5,8 +5,8 @@ spring:
   profiles: default
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://52.24.172.255:3306/petfriends?characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
+    url: jdbc:mariadb://${HOST_NAME}:3306/petfriends?characterEncoding=UTF-8&serverTimezone=UTC
+    username: ${DB_USERNAME}
     password: 
   jpa:
     hibernate:
@@ -19,7 +19,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: 52.24.172.255:9092
+          brokers: ${HOST_NAME}:9092
         streams:
           binder:
             configuration:
