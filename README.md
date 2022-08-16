@@ -19,6 +19,21 @@ COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
 
+CREATE TABLE `point` (
+	`point_id` BIGINT(20) NULL DEFAULT NULL,
+	`payment_id` BIGINT(20) NULL DEFAULT NULL,
+	`reserved_id` BIGINT(20) NULL DEFAULT NULL,
+	`user_id` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`user_name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`point_gubun` ENUM('PAY','EARN','REFUND') NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`point` DOUBLE NULL DEFAULT NULL,
+	`current_point` DOUBLE NULL DEFAULT NULL,
+	`create_date` TIMESTAMP NULL DEFAULT NULL
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
 
 insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, user_id) values (10000, '2022-03-10 19:22:33.102', null, '22021','soyapayment95');  
 
