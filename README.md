@@ -3,8 +3,8 @@
 ---------------------------------------------------
 테이블스페이스 : petfriends
 
-테이블생성 Script: CREATE TABLE `payment` (
-	`pay_id` BIGINT(20) NOT NULL DEFAULT '0',
+테이블생성 Script: CREATE TABLE `payment` ( <br/> 
+	`pay_id` BIGINT(20) NOT NULL DEFAULT '0',<br/> 
 	`reserved_id` BIGINT(20) NULL DEFAULT NULL,
 	`user_id` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 	`user_name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
