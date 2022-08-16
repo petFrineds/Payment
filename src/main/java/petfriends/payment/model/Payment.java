@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -43,9 +44,19 @@ public class Payment {
     private Timestamp payDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp refundDate;
-     
+    @Transient 
+    private Double currentPoint;
     
-    public Long getId() {
+
+	public Double getCurrentPoint() {
+		return currentPoint;
+	}
+
+	public void setCurrentPoint(Double currentPoint) {
+		this.currentPoint = currentPoint;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
