@@ -36,7 +36,8 @@ public class PaymentService {
 	        //SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss"); 		        
 			p.setRefundDate(timestamp);
 			
-			paymentRepository.save(p);
+			return paymentRepository.save(p);
+			
 		}
 		 
 		return null;
