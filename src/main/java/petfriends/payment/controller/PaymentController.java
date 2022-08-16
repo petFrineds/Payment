@@ -34,11 +34,6 @@ import petfriends.payment.service.PaymentService;
 		 return paymentService.pay(payment);
 	 }
 	 
-//	 @PutMapping("/payments/{id}")
-//	 	 public Payment refund(@Valid @RequestBody Long id) {
-//		 return paymentService.refund(id);
-//	 }
-	 
 	 @PutMapping("/payments/{id}")
 	 	 public Payment refund(@PathVariable Long id) {
 		 return paymentService.refund(id);
