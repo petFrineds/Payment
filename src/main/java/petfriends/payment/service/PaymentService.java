@@ -28,6 +28,15 @@ public class PaymentService {
 		 return paymentRepository.findAllByUserId(userId);
 	 } 
 	 
+	 public Payment findById(Long id) {
+	
+		 if(paymentRepository.findById(id).isPresent()) {
+			 Optional<Payment> pay = paymentRepository.findById(id);
+			 return pay.get();
+		 }
+		 return null;
+	 } 
+	 
 	 public List<Point> findPointAllByUserId(String userId) {
 		 return pointRepository.findAllByUserId(userId);
 	 } 

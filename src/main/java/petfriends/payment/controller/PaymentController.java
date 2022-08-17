@@ -30,6 +30,12 @@ import petfriends.payment.service.PaymentService;
 		 return paymentService.findAllByUserId(userId);
 	 }
 	 
+	 @GetMapping("/payments/{id}")
+	 public Payment findPaymentById(@PathVariable("id") Long id) {
+		 return paymentService.findById(id);
+	 }
+	 
+	 
 	 @PostMapping("/payments")
 	 public Payment pay(@Valid @RequestBody Payment payment) {
 		 return paymentService.pay(payment);
