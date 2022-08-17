@@ -37,6 +37,7 @@ public class PaymentService {
 		    Payment pay = paymentRepository.save(payment);
 		    
 		 	if(PayType.POINT.equals(pay.getPayType())) {
+		 		System.out.println(pay);
 		 		//현재포인트 가져와서 빼줘야함.
 		 		Point p = new Point();
 		 		p.setPaymentId(pay.getId());
@@ -46,7 +47,7 @@ public class PaymentService {
 		 		p.setCreateDate(pay.getPayDate());
 		 		p.setPointGubun(PointGubun.PAY);
 		 		p.setUserId(pay.getUserId());
-		 		p.setUserId(pay.getUserName());
+		 		p.setUserName(pay.getUserName());
 		 		pointRepository.save(p);
 		 	}
 		 			
