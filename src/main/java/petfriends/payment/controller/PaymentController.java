@@ -25,7 +25,7 @@ import petfriends.payment.service.PaymentService;
 	 @Autowired
 	 PaymentService paymentService;
 	 
-	 @GetMapping("/payments/users/{userId}")
+	 @GetMapping("/payments/pays/{userId}")
 	 public List<Payment> findPaymentByUserId(@PathVariable("userId") String userId) {
 		 return paymentService.findAllByUserId(userId);
 	 }
@@ -34,7 +34,6 @@ import petfriends.payment.service.PaymentService;
 	 public Payment findPaymentById(@PathVariable("id") Long id) {
 		 return paymentService.findById(id);
 	 }
-	 
 	 
 	 @PostMapping("/payments")
 	 public Payment pay(@Valid @RequestBody Payment payment) {
@@ -46,7 +45,7 @@ import petfriends.payment.service.PaymentService;
 		 return paymentService.refund(id);
 	 }
 	 
-	 @GetMapping("/points/users/{userId}")
+	 @GetMapping("/payments/points/{userId}")
 	 public List<Point> findPointAllByUserId(@PathVariable("userId") String userId) {
 		 return paymentService.findPointAllByUserId(userId);
 	 }
