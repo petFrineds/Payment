@@ -1,12 +1,6 @@
 package petfriends;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import petfriends.config.KafkaProcessor;
-import petfriends.payment.dto.OrderCancelled;
-import petfriends.payment.repository.PaymentRepository;
-
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,31 +8,62 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import petfriends.config.KafkaProcessor;
+import petfriends.payment.dto.WalkEnded;
+import petfriends.payment.model.Point;
+import petfriends.payment.model.PointGubun;
+import petfriends.payment.repository.PaymentRepository;
+import petfriends.payment.repository.PointRepository;
+import petfriends.payment.service.PaymentService;
+
 @Service
 public class PolicyHandler{
+	
     @StreamListener(KafkaProcessor.INPUT)
     public void onStringEventListener(@Payload String eventString){
 
     }
     
     @Autowired
+    PointRepository pointRepository;
+    
+    @Autowired
     PaymentRepository paymentRepository;
+    
+    @Autowired
+    PaymentService paymentService;
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverOrderCancelled_(@Payload OrderCancelled orderCancelled){
-
-    	if(orderCancelled.isMe()){
-            System.out.println("##### listener  : " + orderCancelled.toJson());
+    public void wheneverWalkEnded_(@Payload WalkEnded walkEnded){
+    	
+    	// 산책 종료시 포인트 지급 
+    	// TODO :
+    	// 1.포인트 : 책정은 일단 결제 액의 10% -> 결제금액은 reservedId로 조회하여 amount가져옴.
+    	// 2.현재포인트 : 회원정보에서 가져와야하는데 임시로 포인트테이블에서 사용자이름으로 최종 포인트를 찾아옴.
+    	if(walkEnded.isMe()){
+            System.out.println("######## walkEndede listener  : " + walkEnded.toJson());
+           
+            //결제금액
+            Double amount = paymentService.getAmount(walkEnded.getReservedId()); 
             
-            //List<Payment> list = paymentRepository.findByOrderId(orderCancelled.getId()); // mariadb  추가하면서 주석
+            //지급포인트
+            Double earnPoint = amount * (double)0.1 ; //결제금액의 10%
             
-            //for(Payment payment : list){
-            	// payment.setCancelYn("Y"); // 테이블 변경하면서 주석처리 2202.06.27
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                // view 레파지 토리에 save
-            //	paymentRepository.save(payment);
-            //}
+            //현재포인트
+            List<Point> userPointList = paymentService.findPointAllByUserId(walkEnded.getUserId());
+            Double currentPoint = userPointList.get(userPointList.size()-1).getCurrentPoint();
             
+            //저장데이터
+            Point point = new Point();     		
+            point.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            point.setCurrentPoint(currentPoint);
+            point.setPoint(earnPoint);
+            point.setPointGubun(PointGubun.EARN);
+            point.setReservedId(walkEnded.getReservedId());
+            point.setUserId(walkEnded.getUserId());
+            
+            //point지급 저장
+            pointRepository.save(point);  
         }
     }
 

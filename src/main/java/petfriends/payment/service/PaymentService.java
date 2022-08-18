@@ -99,5 +99,25 @@ public class PaymentService {
 		 
 		 return null;
 	 }
+	 
+	 // 예약번호에 대한 결제금액 리턴
+	 public Double getAmount(Long reservedId) throws RuntimeException { 
+		 
+		 List<Payment> paymentList = paymentRepository.findByReservedId(reservedId);
+		 Double amount = (double)0;
+		 
+		 if(paymentList == null) {
+			 new RuntimeException( "(" + reservedId +")"+ "예약번호에 해당하는 결제 내역이 없습니다. ");
+		 }else {
+			 amount = (paymentList.get(0)).getAmount();
+		 }
+		 
+		 return amount;
+		 
+	 }
+	 
+	  
+	 
+	 
 }
 
