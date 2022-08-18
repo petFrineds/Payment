@@ -51,7 +51,10 @@ public class PolicyHandler{
             
             //현재포인트
             List<Point> userPointList = paymentService.findPointAllByUserId(walkEnded.getUserId());
-            Double currentPoint = userPointList.get(userPointList.size()-1).getCurrentPoint();
+            Double currentPoint = (double)0;
+            if(userPointList != null || userPointList.size() > 0) {
+            	currentPoint = userPointList.get(userPointList.size()-1).getCurrentPoint() + earnPoint;
+            }
             
             //저장데이터
             Point point = new Point();     		
@@ -65,6 +68,6 @@ public class PolicyHandler{
             //point지급 저장
             pointRepository.save(point);  
         }
+	   
     }
-
 }
