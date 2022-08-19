@@ -12,11 +12,32 @@ spec:
   rules:
     - http:
         paths:
+          - path: /walks
+            pathType: Prefix
+            backend:  
+              service:
+                name: "walk-backend"
+                port:
+                  number: 8080   
+          - path: /userInfos
+            pathType: Prefix
+            backend:  
+              service:
+                name: "userinfo-backend"
+                port:
+                  number: 8080 
           - path: /payments
             pathType: Prefix
             backend:  
               service:
                 name: "payment-backend"
+                port:
+                  number: 8080
+          - path: /reservation
+            pathType: Prefix
+            backend:  
+              service:
+                name: "reservation-backend"
                 port:
                   number: 8080
           - path: /
@@ -25,4 +46,4 @@ spec:
               service:
                 name: "frontend"
                 port:
-                  number: 80
+                  number: 80                    
