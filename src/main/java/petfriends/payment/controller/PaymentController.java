@@ -35,7 +35,6 @@ import petfriends.payment.service.PaymentService;
 		 return paymentService.findById(id);
 	 }
 	 
-	 
 	 @PostMapping("/payments")
 	 public Payment pay(@Valid @RequestBody Payment payment) {
 		 return paymentService.pay(payment);
