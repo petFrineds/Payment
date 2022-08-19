@@ -136,26 +136,26 @@ public class Payment {
 		this.refundDate = refundDate;
 	}
 
-	@PostPersist
-    public void onPostPersist(){
-        Payed payed = new Payed();
-        BeanUtils.copyProperties(this, payed);
-        payed.publishAfterCommit(); 
-        
-        try {
-                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-        } catch (InterruptedException e) {
-                e.printStackTrace();
-        }
-    }
+//	@PostPersist
+//    public void onPostPersist(){
+//        Payed payed = new Payed();
+//        BeanUtils.copyProperties(this, payed);
+//        payed.publishAfterCommit(); 
+//        
+//        try {
+//                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+//        } catch (InterruptedException e) {
+//                e.printStackTrace();
+//        }
+//    }
 
-    @PostUpdate
-    public void onPostUpdate(){
-        Refunded refunded = new Refunded();
-        BeanUtils.copyProperties(this, refunded);
-        refunded.publishAfterCommit();
-
-    }
+//    @PostUpdate
+//    public void onPostUpdate(){
+//        Refunded refunded = new Refunded();
+//        BeanUtils.copyProperties(this, refunded);
+//        refunded.publishAfterCommit();
+//
+//    }
 
 
 

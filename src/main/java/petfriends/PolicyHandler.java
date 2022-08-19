@@ -43,15 +43,19 @@ public class PolicyHandler{
     	if(walkEnded.isMe()){
             System.out.println("######## walkEndede listener  : " + walkEnded.toJson());
            
-            //결제금액
-            Double amount = paymentService.getAmount(walkEnded.getReservedId()); 
+            //결제금액 
+            Double amount = paymentService.getAmount(walkEnded.getReservedId());
             
             //지급포인트
             Double earnPoint = amount * (double)0.1 ; //결제금액의 10%
             
             //현재포인트
             List<Point> userPointList = paymentService.findPointAllByUserId(walkEnded.getUserId());
-            Double currentPoint = userPointList.get(userPointList.size()-1).getCurrentPoint();
+            Double currentPoint = (double)0;
+            
+            if(!userPointList.isEmpty()) {
+            	currentPoint = userPointList.get(userPointList.size()-1).getCurrentPoint() + earnPoint;
+            }
             
             //저장데이터
             Point point = new Point();     		

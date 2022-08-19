@@ -63,12 +63,12 @@ public class PaymentService {
 			return pay;
 	 } 
 	 
-	 public Payment refund(Long id) {
+	 public Payment refund(Long reservedId) {
 		 
-		 Optional<Payment> payment = paymentRepository.findById(id);
-		 if(payment.isPresent()) {
+		 List<Payment> paymentList = paymentRepository.findByReservedId(reservedId);
+		 if(!paymentList.isEmpty()) {
 			 
-			Payment pay = payment.get();
+			Payment pay = paymentList.get(0);
 			pay.setPayGubun(PayGubun.REFUND);
 			
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
