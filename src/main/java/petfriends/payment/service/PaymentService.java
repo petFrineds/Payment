@@ -116,7 +116,9 @@ public class PaymentService {
 		 
 	 }
 	 
-	  
+	 public Point earn(Point point) {
+		 return pointRepository.save(point);
+	 }
 	 
 	 
 }

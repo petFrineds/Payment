@@ -50,6 +50,12 @@ import petfriends.payment.service.PaymentService;
 		 return paymentService.findPointAllByUserId(userId);
 	 }
 	 
+	 //포인트지급 테스트용
+	 @PostMapping("/points")
+	 public Point earn(@Valid @RequestBody Point point) {
+		 return paymentService.earn(point);
+	 }
+	 
 	 
  }
 

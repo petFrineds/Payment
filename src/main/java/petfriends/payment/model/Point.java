@@ -9,18 +9,26 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import petfriends.payment.dto.PointChanged;
 
 @Entity
 @DynamicUpdate
 @Data
 @Table(name="point")
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Point {
 
     @Id
@@ -40,29 +48,19 @@ public class Point {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp createDate;
 
-//	@PostPersist
-//    public void onPostPersist(){
-//        Payed payed = new Payed();
-//        BeanUtils.copyProperties(this, payed);
-//        payed.publishAfterCommit(); 
-//        
-//        try {
-//                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-//        } catch (InterruptedException e) {
-//                e.printStackTrace();
-//        }
-//    }
-//
-//    @PostUpdate
-//    public void onPostUpdate(){
-//        Refunded refunded = new Refunded();
-//        BeanUtils.copyProperties(this, refunded);
-//        refunded.publishAfterCommit();
-//
-//    }
-
-
-
+	@PostPersist
+    public void onPostPersist(){
+        PointChanged point = new PointChanged();
+        BeanUtils.copyProperties(this, point);
+        point.setChangeDate(this.getCreateDate());
+        point.publishAfterCommit(); 
+        
+        try {
+                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+        } catch (InterruptedException e) {
+                e.printStackTrace();
+        }
+    }
 
 
 }
