@@ -80,8 +80,5 @@ AUTO_INCREMENT=1
    -model  
    -config : KafkaProcessor.java, WebConfig.java(CORS적용)  
 --------------------------------------------------  
-5. API  
-   해당ID의 결제내역조회 : GET http://localhost:8080/payments/users/{userId}   
---------------------------------------------------  
-
+  
 6. swagger추가 : http://localhost:8080/swagger-ui.html
