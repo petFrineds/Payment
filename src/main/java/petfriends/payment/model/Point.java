@@ -9,20 +9,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import petfriends.payment.dto.Payed;
-import petfriends.payment.dto.Refunded;
+import lombok.Data;
 
 @Entity
 @DynamicUpdate
+@Data
 @Table(name="point")
 public class Point {
 
@@ -32,92 +29,16 @@ public class Point {
     private Long id;
     private Long paymentId;
     private Long reservedId;
-    
     private String userId;
-    private String userName;
-    
+    private String userName;    
     @Enumerated(EnumType.STRING)
     private PointGubun pointGubun;    
-
 	private Double point;
     private Double currentPoint;
-    
+    private String bankName;
+    private String accountNumber;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp createDate;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getPaymentId() {
-		return paymentId;
-	}
-
-	public void setPaymentId(Long paymentId) {
-		this.paymentId = paymentId;
-	}
-
-	public Long getReservedId() {
-		return reservedId;
-	}
-
-	public void setReservedId(Long reservedId) {
-		this.reservedId = reservedId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public PointGubun getPointGubun() {
-		return pointGubun;
-	}
-
-	public void setPointGubun(PointGubun pointGubun) {
-		this.pointGubun = pointGubun;
-	}
-
-	public Double getPoint() {
-		return point;
-	}
-
-	public void setPoint(Double point) {
-		this.point = point;
-	}
-
-	public Double getCurrentPoint() {
-		return currentPoint;
-	}
-
-	public void setCurrentPoint(Double currentPoint) {
-		this.currentPoint = currentPoint;
-	}
-
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-     
-    
 
 //	@PostPersist
 //    public void onPostPersist(){
