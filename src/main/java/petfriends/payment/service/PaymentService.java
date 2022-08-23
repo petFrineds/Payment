@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -116,8 +117,11 @@ public class PaymentService {
 		 
 	 }
 	 
-	 public Point earn(Point point) {
-		 return pointRepository.save(point);
+	 public Point changePoint(Point point) {
+		 Point po = new Point();
+		 BeanUtils.copyProperties(point, po);
+		 po.setCurrentPoint(point.getCurrentPoint()-point.getPoint());
+		 return pointRepository.save(po);
 	 }
 	 
 	 
