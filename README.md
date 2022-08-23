@@ -1,5 +1,5 @@
 ---------------------------------------------------
-1. maria 설치 및 테이블 생성(예제에는 id/passwd : root/1234 , 변경은 application.yml에서 하면 됨.! )
+1. 사용테이블
 ---------------------------------------------------
 테이블스페이스 : petfriends
 
@@ -40,24 +40,36 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1
 ;
 
-
-insert샘플: insert into payment (amount, pay_date, refund_date, reserved_id, user_id) values (10000, '2022-03-10 19:22:33.102', null, '22021','soyapayment95');  
-
 ---------------------------------------------------  
 2. kafka설치 
 ---------------------------------------------------  
 참고사이트 : http://www.msaschool.io/operation/implementation/implementation-seven/  
 
 --------------------------------------------------  
-3. Payment(mariadb), Shop(hsqldb) 실행 및 테스트  
+3. API
 --------------------------------------------------  
 1) Payment에서 아래와 같이 api 통해 데이터 생성하면, mariadb[payment테이블]에 데이터 저장되고, message publish.  
     - 데이터생성(postman사용) : POST http://localhost:8082/payments/   
-                              { "reservedId": "202203271311", "userId": "soya95", "amount": "10000", "payDate": "2019-03-10 10:22:33.102" }  
+{
+  "amount": 35000,
+  "cardNumber": "12312312",
+  "currentPoint": 2000,
+  "payDate": "2022-08-18 14:28:33.102",
+  "payGubun": "PAY",
+  "payType": "CARD",
+  "reservedId": 1,
+  "userId": "soya95",
+  "userName": "SOMINA"
+}
 
-    - 조회 : GET http://localhost:8080/payments/1  
-
-3) Shop에서 message 받아와 저장 ( 아래 PloycyHandler.java가 실행됨 )  
+2) 예약번호에 해당하는 결제조회 : GET http://localhost:8080/payments/{reservedid}  
+3) 환불 : PUT http://localhost:8080/payments/{id}
+4) 결제내역 조회(사용자별) : GET http://localhost:8080/payments/pays/soya95
+5) 포인트내역조회(사용자별) : GET http://localhost:8080/payments/points/{userId}
+6) 포인트이력생성(지불/환불/지급) POST http://localhost:8080/points
+{"userId":"soya95", "userName":"somina", “pointGubun”:”PAY”(사용)/”REFUND”(환불)/”EARN”(지급), "point":"10000" }
+6) 포인트이력생성(현금전환) POST http://localhost:8080/points 
+{"userId":"soya95", "userName":"somina", “pointGubun”:”ENCASH”(현금화), “bankName”:”하나은행”,“accountNumber”:”123425113212”,”currentPoint”:”20000”, “point”:”10000” }
 
 --------------------------------------------------  
 4. 구조   
