@@ -45,29 +45,48 @@ public class PolicyHandler{
            
             //결제금액 
             Double amount = paymentService.getAmount(walkEnded.getReservedId());
-            
-            //지급포인트
+        
+            //댕주인 지급포인트
             Double earnPoint = amount * (double)0.1 ; //결제금액의 10%
-            
-            //현재포인트
+            //댕주인 현재포인트
             List<Point> userPointList = paymentService.findPointAllByUserId(walkEnded.getUserId());
             Double currentPoint = (double)0;
-            
             if(!userPointList.isEmpty()) {
             	currentPoint = userPointList.get(userPointList.size()-1).getCurrentPoint() + earnPoint;
             }
+            //댕주인 저장데이터
+            Point userPoint = new Point();     		
+            userPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            userPoint.setCurrentPoint(currentPoint);
+            userPoint.setPoint(earnPoint);
+            userPoint.setPointGubun(PointGubun.EARN);
+            userPoint.setReservedId(walkEnded.getReservedId());
+            userPoint.setUserId(walkEnded.getUserId());
+            //댕주인 point지급 저장
+            pointRepository.save(userPoint);  
             
-            //저장데이터
-            Point point = new Point();     		
-            point.setCreateDate(new Timestamp(System.currentTimeMillis()));
-            point.setCurrentPoint(currentPoint);
-            point.setPoint(earnPoint);
-            point.setPointGubun(PointGubun.EARN);
-            point.setReservedId(walkEnded.getReservedId());
-            point.setUserId(walkEnded.getUserId());
             
-            //point지급 저장
-            pointRepository.save(point);  
+            //도그워커 지급포인트
+            Double dwEarnPoint = amount; //결제금액
+            //댕주인 현재포인트
+            List<Point> dwPointList = paymentService.findPointAllByUserId(walkEnded.getDogWalkerId());
+            Double dwCurrentPoint = (double)0;
+            if(!dwPointList.isEmpty()) {
+            	dwCurrentPoint = dwPointList.get(dwPointList.size()-1).getCurrentPoint() + dwEarnPoint;
+            }
+            
+            //도그워커 저장데이터
+            Point dwPoint = new Point();     		
+            dwPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            dwPoint.setCurrentPoint(dwCurrentPoint);
+            dwPoint.setPoint(dwEarnPoint);
+            dwPoint.setPointGubun(PointGubun.EARN);
+            dwPoint.setReservedId(walkEnded.getReservedId());
+            dwPoint.setUserId(walkEnded.getDogWalkerId());
+            
+            //도그워커 point(요금)지급 저장
+            pointRepository.save(dwPoint);  
+            
         }
     }
 
