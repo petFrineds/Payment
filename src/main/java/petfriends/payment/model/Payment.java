@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import petfriends.payment.dto.Payed;
+import petfriends.payment.dto.Refunded;
 
 @Entity
 @DynamicUpdate
@@ -62,13 +63,12 @@ public class Payment {
         }
     }
 
-//    @PostUpdate
-//    public void onPostUpdate(){
-//        Refunded refunded = new Refunded();
-//        BeanUtils.copyProperties(this, refunded);
-//        refunded.publishAfterCommit();
-//
-//    }
+    @PostUpdate
+    public void onPostUpdate(){
+        Refunded refunded = new Refunded();
+        BeanUtils.copyProperties(this, refunded);
+        refunded.publishAfterCommit();
+    }
 
 
 }

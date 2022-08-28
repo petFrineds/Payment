@@ -80,7 +80,7 @@ public class PolicyHandler{
             dwPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
             dwPoint.setCurrentPoint(dwCurrentPoint);
             dwPoint.setPoint(dwEarnPoint);
-            dwPoint.setPointGubun(PointGubun.EARN);
+            dwPoint.setPointGubun(PointGubun.WAGE);
             dwPoint.setReservedId(walkEnded.getReservedId());
             dwPoint.setUserId(walkEnded.getDogWalkerId());
             

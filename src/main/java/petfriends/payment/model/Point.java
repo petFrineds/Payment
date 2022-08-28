@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import petfriends.payment.dto.PointChanged;
+import petfriends.payment.dto.PointPayed;
 
 @Entity
 @DynamicUpdate
@@ -61,7 +61,19 @@ public class Point {
         } catch (InterruptedException e) {
                 e.printStackTrace();
         }
+        
+        if(PointGubun.EARN.equals(getPointGubun()) || PointGubun.WAGE.equals(getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
+	        PointPayed pointpayed = new PointPayed();
+	        BeanUtils.copyProperties(this, pointpayed);
+	        pointpayed.setChangeDate(this.getCreateDate());
+	        pointpayed.publishAfterCommit(); 
+       
+	        try {
+	                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+	        } catch (InterruptedException e) {
+	                e.printStackTrace();
+	        }
+        }
     }
-
 
 }
