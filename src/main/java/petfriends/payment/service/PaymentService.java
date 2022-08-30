@@ -8,7 +8,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import petfriends.payment.model.PayGubun;
 import petfriends.payment.model.PayType;
 import petfriends.payment.model.Payment;
 import petfriends.payment.model.Point;
@@ -70,7 +69,7 @@ public class PaymentService {
 		 if(!paymentList.isEmpty()) {
 			 
 			Payment pay = paymentList.get(0);
-			pay.setPayGubun(PayGubun.REFUND);
+			pay.setRefundYn("Y");
 			
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
 			pay.setRefundDate(timestamp);

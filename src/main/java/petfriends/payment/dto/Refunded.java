@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 import lombok.Data;
 import petfriends.AbstractEvent;
-import petfriends.payment.model.PayGubun;
 import petfriends.payment.model.PayType;
 
 @Data

@@ -39,7 +39,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PayType payType;
     @Enumerated(EnumType.STRING)
-    private PayGubun payGubun;
+    private String refundYn;
     private String cardCompany;
     private String cardNumber;
     private String cardValidMonth;
