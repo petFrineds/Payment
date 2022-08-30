@@ -62,7 +62,7 @@ public class Point {
                 e.printStackTrace();
         }
         
-        if(PointPayKind.EARN.equals(getPointGubun()) || PointPayKind.WAGE.equals(getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
+        if(PointPayKind.WAGE.equals(this.getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
 	        PointPayed pointpayed = new PointPayed();
 	        BeanUtils.copyProperties(this, pointpayed);
 	        pointpayed.setChangeDate(this.getCreateDate());
