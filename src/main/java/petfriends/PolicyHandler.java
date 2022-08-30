@@ -93,11 +93,13 @@ public class PolicyHandler{
             	dwCurrentPoint = dwPointList.get(dwPointList.size()-1).getCurrentPoint();
             }
             
-            dwUpdateCurrentPoint = dwCurrentPoint + dwEarnPoint ; //새로계산된 현재포인트
+           
             
-            System.out.println("dogWalkerId: "+ userId);
+            System.out.println("dogWalkerId: "+ dogWalkerId);
             System.out.println("amount:" + amount + "dogwalker현재포인트: "  + dwCurrentPoint + ", 지급Point: " + dwEarnPoint);
+            dwUpdateCurrentPoint = dwCurrentPoint + dwEarnPoint ; //새로계산된 현재포인트
             System.out.println("dogwalker계산된현재포인트: " + dwUpdateCurrentPoint);
+            
             
             //도그워커 point데이터
             Point dwPoint = new Point();     		
