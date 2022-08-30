@@ -41,7 +41,7 @@ public class Point {
     private String userId;
     private String userName;    
     @Enumerated(EnumType.STRING)
-    private PointGubun pointGubun;    
+    private PointPayKind pointGubun;    
 	private Double point;
     private Double currentPoint;
     private String bankName;
@@ -62,7 +62,7 @@ public class Point {
                 e.printStackTrace();
         }
         
-        if(PointGubun.EARN.equals(getPointGubun()) || PointGubun.WAGE.equals(getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
+        if(PointPayKind.EARN.equals(getPointGubun()) || PointPayKind.WAGE.equals(getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
 	        PointPayed pointpayed = new PointPayed();
 	        BeanUtils.copyProperties(this, pointpayed);
 	        pointpayed.setChangeDate(this.getCreateDate());

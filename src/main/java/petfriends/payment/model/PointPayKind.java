@@ -1,5 +1,5 @@
 package petfriends.payment.model;
 
-public enum PointGubun {
+public enum PointPayKind {
 	PAY, EARN, REFUND, WAGE, ENCASH 
 }

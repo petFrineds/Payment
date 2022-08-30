@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import petfriends.config.KafkaProcessor;
 import petfriends.payment.dto.WalkEnded;
 import petfriends.payment.model.Point;
-import petfriends.payment.model.PointGubun;
+import petfriends.payment.model.PointPayKind;
 import petfriends.payment.repository.PaymentRepository;
 import petfriends.payment.repository.PointRepository;
 import petfriends.payment.service.PaymentService;
@@ -79,7 +79,7 @@ public class PolicyHandler{
             userPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
             userPoint.setPoint(earnPoint);
             userPoint.setCurrentPoint(userUpdateCurrentPoint);
-            userPoint.setPointGubun(PointGubun.EARN);
+            userPoint.setPointGubun(PointPayKind.EARN);
             userPoint.setReservedId(walkEnded.getReservedId());
             userPoint.setUserId(userId);
             
@@ -106,7 +106,7 @@ public class PolicyHandler{
             dwPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
             dwPoint.setPoint(dwEarnPoint);
             dwPoint.setCurrentPoint(dwUpdateCurrentPoint);
-            dwPoint.setPointGubun(PointGubun.WAGE);
+            dwPoint.setPointGubun(PointPayKind.WAGE);
             dwPoint.setReservedId(walkEnded.getReservedId());
             dwPoint.setUserId(dogWalkerId);
             

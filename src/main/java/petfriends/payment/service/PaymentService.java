@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import petfriends.payment.model.PayType;
 import petfriends.payment.model.Payment;
 import petfriends.payment.model.Point;
-import petfriends.payment.model.PointGubun;
+import petfriends.payment.model.PointPayKind;
 import petfriends.payment.repository.PaymentRepository;
 import petfriends.payment.repository.PointRepository;
 
@@ -54,7 +54,7 @@ public class PaymentService {
 		 		p.setPoint(-pay.getAmount());
 		 		p.setCurrentPoint(pay.getCurrentPoint()-pay.getAmount());
 		 		p.setCreateDate(pay.getPayDate());
-		 		p.setPointGubun(PointGubun.PAY);
+		 		p.setPointGubun(PointPayKind.PAY);
 		 		p.setUserId(pay.getUserId());
 		 		p.setUserName(pay.getUserName());
 		 		pointRepository.save(p);
@@ -85,7 +85,7 @@ public class PaymentService {
 		 		point.setPoint(pay.getAmount());
 		 		point.setCurrentPoint(currentPoint + pay.getAmount());
 		 		point.setCreateDate(pay.getPayDate());
-		 		point.setPointGubun(PointGubun.REFUND);
+		 		point.setPointGubun(PointPayKind.REFUND);
 		 		point.setUserId(pay.getUserId());
 		 		point.setUserId(pay.getUserName());
 		 		

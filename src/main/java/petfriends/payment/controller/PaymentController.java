@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import petfriends.payment.model.Payment;
 import petfriends.payment.model.Point;
-import petfriends.payment.model.PointGubun;
+import petfriends.payment.model.PointPayKind;
 import petfriends.payment.model.UserImage;
 import petfriends.payment.repository.UserImageRepository;
 import petfriends.payment.service.PaymentService;
@@ -128,7 +128,7 @@ import petfriends.payment.service.PaymentService;
 	 @PostMapping("/points")
 	 public Point changePoint(@Valid @RequestBody Point point) {
 		 
-		 if(point.getPointGubun() != null & PointGubun.ENCASH.equals(point.getPointGubun())) {
+		 if(point.getPointGubun() != null & PointPayKind.ENCASH.equals(point.getPointGubun())) {
 			 if(point.getBankName() == null ) {
 				 new RuntimeException( "은행명을 입력해주세요");
 			 }
