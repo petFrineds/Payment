@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import petfriends.payment.dto.PointChanged;
-import petfriends.payment.dto.PointPayed;
 
 @Entity
 @DynamicUpdate
