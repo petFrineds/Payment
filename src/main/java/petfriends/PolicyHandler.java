@@ -55,8 +55,9 @@ public class PolicyHandler{
     	
     	if(walkEnded.isMe()){
             System.out.println("######## walkEndede listener  : " + walkEnded.toJson());
- 
-            userId = walkEnded.getUserId(); //dogWalkerId
+            
+            ////댕주인//////////////////////////////////////////////////////////////////////////////
+            userId = walkEnded.getUserId(); //userId
             amount = paymentService.getAmount(walkEnded.getReservedId()); //결제금액
             earnPoint = amount * 0.1 ; //사용자포인트(지급금액의 10%)
             
@@ -82,6 +83,8 @@ public class PolicyHandler{
             userPoint.setReservedId(walkEnded.getReservedId());
             userPoint.setUserId(userId);
             
+            
+            ////dogWalker//////////////////////////////////////////////////////////////////////////////
             dogWalkerId = walkEnded.getDogWalkerId(); //dogWalkerId
             dwEarnPoint = amount; //도그워커 지급포인트
             //dogwalker 현재포인트
@@ -90,7 +93,7 @@ public class PolicyHandler{
             	dwCurrentPoint = dwPointList.get(dwPointList.size()-1).getCurrentPoint();
             }
             
-            dwUpdateCurrentPoint = userCurrentPoint + earnPoint ; //새로계산된 현재포인트
+            dwUpdateCurrentPoint = dwCurrentPoint + dwEarnPoint ; //새로계산된 현재포인트
             
             System.out.println("dogWalkerId: "+ userId);
             System.out.println("amount:" + amount + "dogwalker현재포인트: "  + dwCurrentPoint + ", 지급Point: " + dwEarnPoint);
