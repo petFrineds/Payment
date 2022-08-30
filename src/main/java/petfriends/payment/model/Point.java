@@ -62,18 +62,18 @@ public class Point {
                 e.printStackTrace();
         }
         
-        if(PointPayKind.WAGE.equals(this.getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
-	        PointPayed pointpayed = new PointPayed();
-	        BeanUtils.copyProperties(this, pointpayed);
-	        pointpayed.setChangeDate(this.getCreateDate());
-	        pointpayed.publishAfterCommit(); 
-       
-	        try {
-	                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-	        } catch (InterruptedException e) {
-	                e.printStackTrace();
-	        }
-        }
+//        if(PointPayKind.WAGE.equals(this.getPointGubun())) { //포인트지급일 경우 MyPage에 상태변경
+//	        PointPayed pointpayed = new PointPayed();
+//	        BeanUtils.copyProperties(this, pointpayed);
+//	        pointpayed.setChangeDate(this.getCreateDate());
+//	        pointpayed.publishAfterCommit(); 
+//       
+//	        try {
+//	                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+//	        } catch (InterruptedException e) {
+//	                e.printStackTrace();
+//	        }
+//        }
     }
 
 }

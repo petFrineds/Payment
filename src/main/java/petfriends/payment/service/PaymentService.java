@@ -43,6 +43,7 @@ public class PaymentService {
 	 
 	 
 	 public Payment pay(Payment payment) {
+		    payment.setRefundYn("N"); //default값 : pay일경우
 		    Payment pay = paymentRepository.save(payment);
 		    
 		 	if(PayType.POINT.equals(pay.getPayType())) {

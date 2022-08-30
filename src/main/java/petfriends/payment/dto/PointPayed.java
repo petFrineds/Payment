@@ -15,7 +15,7 @@ import petfriends.AbstractEvent;
 public class PointPayed extends AbstractEvent {
  	
     private String userId;
-    private String PointGubun; //WAGE:임금 EARN:사용금액에대한10%
+    private String PointPayKind;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp changeDate;
     
