@@ -40,7 +40,11 @@ public class Payment {
     private PayType payType;
     @Enumerated(EnumType.STRING)
     private PayGubun payGubun;
+    private String cardCompany;
     private String cardNumber;
+    private String cardValidMonth;
+    private String cardValidYear;
+    private String cardCvc;
     private Double amount;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp payDate;
@@ -49,7 +53,6 @@ public class Payment {
     @Transient 
     private Double currentPoint;
     
-
 	@PostPersist
     public void onPostPersist(){
         Payed payed = new Payed();
