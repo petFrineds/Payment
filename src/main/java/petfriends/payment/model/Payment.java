@@ -38,7 +38,6 @@ public class Payment {
     private String userName;
     @Enumerated(EnumType.STRING)
     private PayType payType;
-    @Enumerated(EnumType.STRING)
     private String refundYn;
     private String cardCompany;
     private String cardNumber;
