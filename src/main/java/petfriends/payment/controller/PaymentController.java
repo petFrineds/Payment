@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import petfriends.payment.model.Payment;
 import petfriends.payment.model.Point;
 import petfriends.payment.model.PointPayKind;
+import petfriends.payment.repository.PaymentRepository;
 import petfriends.payment.service.PaymentService;
 
 
@@ -25,8 +27,8 @@ import petfriends.payment.service.PaymentService;
 
 	 @Autowired
 	 PaymentService paymentService;
-	
-	
+
+
 	 @GetMapping("/payments/pays/{userId}")
 	 public List<Payment> findPaymentByUserId(@PathVariable("userId") String userId) {
 		 return paymentService.findAllByUserId(userId);
@@ -51,7 +53,29 @@ import petfriends.payment.service.PaymentService;
 	 public List<Point> findPointAllByUserId(@PathVariable("userId") String userId) {
 		 return paymentService.findPointAllByUserId(userId);
 	 }
-	 
+
+	/*circuit breaker 테스트용*/
+	 @GetMapping("/payments/sleep/{param}")
+	 public String testSleep(@PathVariable("param") String param) throws InterruptedException {
+
+		 Thread.sleep(10000000);
+
+		 if(param.equals("fail"))
+			 throw new RuntimeException("failed");
+
+		 return "Payment - testSleep() ==> Success";
+	 }
+
+
+	 /*circuit breaker 테스트용*/
+	 @GetMapping("/payments/message/{param}")
+	 public String testException(@PathVariable("param") String param) throws InterruptedException {
+
+		 if(param.equals("fail"))
+			 throw new RuntimeException("failed");
+
+		 return "Payment - testException() ==> Success";
+	 }
 	 /** 포인트 현금전환 : 
 	   필수para : pointGubun : "ENCASH"
 	           : bankName 
