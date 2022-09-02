@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-backend
+  labels:
+    app: payment-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: payment-backend
+  template:
+    metadata:
+      labels:
+        app: payment-backend
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In          
+                values:
+                - payment-backend
+            topologyKey: kubernetes.io/hostname    
+      containers:
+        - name: payment-backend
+          image: 811288377093.dkr.ecr.us-west-2.amazonaws.com/payment-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATE
+              value: 'DATE_STRING'
+          env:   # Setting Enviornmental Variables
+            - name: HOST_NAME   # Setting Database host address from configMap
+              valueFrom :
+                configMapKeyRef :
+                  name : db-config
+                  key :  host
+            - name: DB_NAME  # Setting Database name from configMap
+              valueFrom :
+                configMapKeyRef :
+                  name : db-config
+                  key :  dbName
+            - name: DB_USERNAME  # Setting Database username from Secret
+              valueFrom :
+                secretKeyRef :
+                  name : db-secrets
+                  key :  username
+            - name: DB_PASSWORD # Setting Database password from Secret
+              valueFrom :
+                secretKeyRef :
+                  name : db-secrets
+                  key :  password
+            - name: KAFKA_HOST_NAME   # Setting Kafka host address from configMap
+              valueFrom :
+                configMapKeyRef :
+                  name : kafka-config
+                  key :  host 
