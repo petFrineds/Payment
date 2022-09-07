@@ -86,7 +86,7 @@ public class PolicyHandler{
             
             ////dogWalker//////////////////////////////////////////////////////////////////////////////
             dogWalkerId = walkEnded.getDogWalkerId(); //dogWalkerId
-            dwEarnPoint = amount; //도그워커 지급포인트
+            dwEarnPoint = amount * 0.9; //도그워커 지급포인트(10%차감)
             //dogwalker 현재포인트
             List<Point> dwPointList = paymentService.findPointAllByUserId(dogWalkerId);
             if(!dwPointList.isEmpty()) {
