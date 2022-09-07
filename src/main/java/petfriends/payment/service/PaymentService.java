@@ -72,6 +72,9 @@ public class PaymentService {
 			Payment pay = paymentList.get(0);
 			pay.setRefundYn("Y");
 			
+			// 환불시 10% 차감
+			pay.setRefundAmount(pay.getAmount() - pay.getAmount() * 0.1); //환불금액 : 결제금액 - 결제금액*10%
+			
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
 			pay.setRefundDate(timestamp);
 			
@@ -83,8 +86,8 @@ public class PaymentService {
 		 		Point point = new Point();
 		 		point.setPaymentId(pay.getId());
 		 		point.setReservedId(pay.getReservedId());
-		 		point.setPoint(pay.getAmount());
-		 		point.setCurrentPoint(currentPoint + pay.getAmount());
+		 		point.setPoint(pay.getRefundAmount()); //환불포인트
+		 		point.setCurrentPoint(currentPoint + pay.getRefundAmount());
 		 		point.setCreateDate(pay.getPayDate());
 		 		point.setPointGubun(PointPayKind.REFUND);
 		 		point.setUserId(pay.getUserId());
