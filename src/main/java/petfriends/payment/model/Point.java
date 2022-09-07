@@ -51,7 +51,9 @@ public class Point {
 	@PostPersist
     public void onPostPersist(){
         PointChanged point = new PointChanged();
-        BeanUtils.copyProperties(this, point);
+        //BeanUtils.copyProperties(this, point);
+        point.setUserId(this.getUserId());
+        point.setPoint(this.getCurrentPoint());
         point.setChangeDate(this.getCreateDate());
         point.publishAfterCommit(); 
         
