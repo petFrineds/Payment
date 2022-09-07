@@ -45,6 +45,7 @@ public class Payment {
     private String cardValidYear;
     private String cardCvc;
     private Double amount;
+    private Double refundAmount;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Timestamp payDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
