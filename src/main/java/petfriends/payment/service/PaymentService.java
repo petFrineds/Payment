@@ -67,32 +67,42 @@ public class PaymentService {
 	 public Payment refund(Long reservedId) {
 		 
 		 List<Payment> paymentList = paymentRepository.findByReservedId(reservedId);
+		 
+		  Double refundAmount = (double)0;
+		 
 		 if(!paymentList.isEmpty()) {
 			 
 			Payment pay = paymentList.get(0);
 			pay.setRefundYn("Y");
 			
 			// 환불시 10% 차감
-			pay.setRefundAmount(pay.getAmount() - pay.getAmount() * 0.1); //환불금액 : 결제금액 - 결제금액*10%
+			refundAmount = pay.getAmount() - (pay.getAmount() * 0.1); //환불금액 : 결제금액 - 결제금액*10%
+			//System.out.println("==================> 환불금액계산 : " + refundAmount);
 			
+			pay.setRefundAmount(refundAmount);
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
 			pay.setRefundDate(timestamp);
 			
 			if(PayType.POINT.equals(pay.getPayType())) {
 				
+				//System.out.println("==================> 포인트 환불 시작");
+				
 				List<Point> payList = pointRepository.findAllByPaymentId(pay.getId());
 				Double currentPoint = payList.get(0).getCurrentPoint();
-			
+				
+				//System.out.println("==================> pay정보 : " + pay);
+				
 		 		Point point = new Point();
 		 		point.setPaymentId(pay.getId());
 		 		point.setReservedId(pay.getReservedId());
-		 		point.setPoint(pay.getRefundAmount()); //환불포인트
-		 		point.setCurrentPoint(currentPoint + pay.getRefundAmount());
+		 		point.setPoint(refundAmount); //환불포인트
+		 		point.setCurrentPoint(currentPoint + refundAmount);
 		 		point.setCreateDate(pay.getPayDate());
 		 		point.setPointGubun(PointPayKind.REFUND);
 		 		point.setUserId(pay.getUserId());
-		 		point.setUserId(pay.getUserName());
+		 		point.setUserName(pay.getUserName());
 		 		
+		 		//System.out.println("==================> 포인트 저장" + point);
 		 		pointRepository.save(point);
 			
 			}
