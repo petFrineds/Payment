@@ -16,6 +16,8 @@ import petfriends.payment.model.PointPayKind;
 import petfriends.payment.repository.PaymentRepository;
 import petfriends.payment.repository.PointRepository;
 import petfriends.payment.service.PaymentService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class PolicyHandler{
@@ -75,8 +77,12 @@ public class PolicyHandler{
             
 
             //댕주인 point데이터
-            Point userPoint = new Point();     		
-            userPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            Point userPoint = new Point();    
+            
+            String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            	
+            userPoint.setCreateDate(dateStr);
+            System.out.print("댕주인Point지급 CreateDate : " +  userPoint.getCreateDate());
             userPoint.setPoint(earnPoint);
             userPoint.setCurrentPoint(userUpdateCurrentPoint);
             userPoint.setPointGubun(PointPayKind.EARN);
@@ -103,7 +109,8 @@ public class PolicyHandler{
             
             //도그워커 point데이터
             Point dwPoint = new Point();     		
-            dwPoint.setCreateDate(new Timestamp(System.currentTimeMillis()));
+            dwPoint.setCreateDate(dateStr);
+            System.out.print("댕주인Point지급 CreateDate : " +  dwPoint.getCreateDate());
             dwPoint.setPoint(dwEarnPoint);
             dwPoint.setCurrentPoint(dwUpdateCurrentPoint);
             dwPoint.setPointGubun(PointPayKind.WAGE);
