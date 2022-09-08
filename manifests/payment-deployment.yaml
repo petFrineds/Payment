@@ -42,4 +42,13 @@ spec:
               valueFrom :
                 secretKeyRef :
                   name : db-secrets
-                  key :  password                
+                  key :  password
+            - name: TZ # TimeZone
+              value: Asia/Seoul       
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul              
