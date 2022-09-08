@@ -41,12 +41,11 @@ public class Point {
     private String userName;    
     @Enumerated(EnumType.STRING)
     private PointPayKind pointGubun;    
-	private Double point;
+    private Double point;
     private Double currentPoint;
     private String bankName;
     private String accountNumber;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
-    private Timestamp createDate;
+    private String createDate;
 
 	@PostPersist
     public void onPostPersist(){
@@ -54,7 +53,9 @@ public class Point {
         //BeanUtils.copyProperties(this, point);
         point.setUserId(this.getUserId());
         point.setPoint(this.getCurrentPoint());
-        point.setChangeDate(this.getCreateDate());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
+        System.out.println("==== > changeDate : " + timestamp);
+        point.setChangeDate(timestamp);
         point.publishAfterCommit(); 
         
         try {
