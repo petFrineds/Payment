@@ -31,7 +31,12 @@ import petfriends.payment.service.PaymentService;
 
 	 @GetMapping("/payments/pays/{userId}")
 	 public List<Payment> findPaymentByUserId(@PathVariable("userId") String userId) {
-		 return paymentService.findAllByUserId(userId);
+	 	 List<Payment> list = paymentService.findAllByUserId(userId);
+	 	 System.out.println("11================================================>");
+	 	 System.out.println(list);
+	 	 System.out.println("11================================================>");
+	 	 return list;
+		 //return paymentService.findAllByUserId(userId);
 	 }
 	 
 	 @GetMapping("/payments/{id}")
