@@ -1,6 +1,5 @@
 package petfriends.payment.service;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +13,10 @@ import petfriends.payment.model.Point;
 import petfriends.payment.model.PointPayKind;
 import petfriends.payment.repository.PaymentRepository;
 import petfriends.payment.repository.PointRepository;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class PaymentService {
@@ -43,10 +46,14 @@ public class PaymentService {
 	 
 	 
 	 public Payment pay(Payment payment) {
-		    payment.setRefundYn("N"); //default값 : pay일경우
-		    Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
-		    payment.setPayDate(timestamp);
-		    Payment pay = paymentRepository.save(payment);
+			payment.setRefundYn("N"); //default값 : pay일경우
+		    //Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
+	
+			String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			System.out.println("====================> Server PayDate now : " + dateStr);
+			payment.setPayDate(dateStr);
+		     
+		    Payment pay = paymentRepository.save(payment); 
 		    
 		 	if(PayType.POINT.equals(pay.getPayType())) {
 		 		System.out.println(pay);
@@ -56,7 +63,7 @@ public class PaymentService {
 		 		p.setReservedId(pay.getReservedId());
 		 		p.setPoint(-pay.getAmount());
 		 		p.setCurrentPoint(pay.getCurrentPoint()-pay.getAmount());
-		 		p.setCreateDate(pay.getPayDate());
+		 		p.setCreateDate(dateStr);
 		 		p.setPointGubun(PointPayKind.PAY);
 		 		p.setUserId(pay.getUserId());
 		 		p.setUserName(pay.getUserName());
@@ -82,8 +89,11 @@ public class PaymentService {
 			//System.out.println("==================> 환불금액계산 : " + refundAmount);
 			
 			pay.setRefundAmount(refundAmount);
-			Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
-			pay.setRefundDate(timestamp);
+			
+			String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+			
+		    System.out.println("RefundDate timestamp : " + dateStr);
+			pay.setRefundDate(dateStr);
 			
 			if(PayType.POINT.equals(pay.getPayType())) {
 				
@@ -99,6 +109,7 @@ public class PaymentService {
 		 		point.setReservedId(pay.getReservedId());
 		 		point.setPoint(refundAmount); //환불포인트
 		 		point.setCurrentPoint(currentPoint + refundAmount);
+		 		System.out.println("point createDate timestamp : " + pay.getPayDate());
 		 		point.setCreateDate(pay.getPayDate());
 		 		point.setPointGubun(PointPayKind.REFUND);
 		 		point.setUserId(pay.getUserId());
