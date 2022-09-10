@@ -1,5 +1,7 @@
 package petfriends.payment.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,16 +9,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import petfriends.PaymentApplication;
 import petfriends.payment.model.PayType;
 import petfriends.payment.model.Payment;
 import petfriends.payment.model.Point;
 import petfriends.payment.model.PointPayKind;
 import petfriends.payment.repository.PaymentRepository;
 import petfriends.payment.repository.PointRepository;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 public class PaymentService {
@@ -44,7 +43,6 @@ public class PaymentService {
 		 return pointRepository.findAllByUserId(userId);
 	 } 
 	 
-	 
 	 public Payment pay(Payment payment) {
 			payment.setRefundYn("N"); //default값 : pay일경우
 		    //Timestamp timestamp = new Timestamp(System.currentTimeMillis());    
@@ -52,8 +50,19 @@ public class PaymentService {
 			String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			System.out.println("====================> Server PayDate now : " + dateStr);
 			payment.setPayDate(dateStr);
-		     
-		    Payment pay = paymentRepository.save(payment); 
+			
+			
+            if(PayType.CARD.equals(payment.getPayType())) {
+    			//외부 카드승인 요청 서비스 호출
+    			System.out.println("====================> card approval service call ");
+                String a = PaymentApplication.applicationContext.getBean(petfriends.external.ExternalService.class).card_pay(payment);
+                System.out.println("====================> 승인번호 오나 :  " + a );
+                if(a != null || a !="") {
+                	payment.setCardApprovalNumber(a);
+                }
+            }
+            
+            Payment pay = paymentRepository.save(payment); 
 		    
 		 	if(PayType.POINT.equals(pay.getPayType())) {
 		 		System.out.println(pay);
@@ -73,7 +82,7 @@ public class PaymentService {
 			return pay;
 	 } 
 	 
-	 public Payment refund(Long reservedId) {
+	 public Payment refund(Long reservedId) throws RuntimeException {
 		 
 		 List<Payment> paymentList = paymentRepository.findByReservedId(reservedId);
 		 
@@ -83,17 +92,30 @@ public class PaymentService {
 			 
 			Payment pay = paymentList.get(0);
 			pay.setRefundYn("Y");
+
 			
 			// 환불시 10% 차감
 			refundAmount = pay.getAmount() - (pay.getAmount() * 0.1); //환불금액 : 결제금액 - 결제금액*10%
 			//System.out.println("==================> 환불금액계산 : " + refundAmount);
-			
 			pay.setRefundAmount(refundAmount);
 			
 			String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 			
 		    System.out.println("RefundDate timestamp : " + dateStr);
 			pay.setRefundDate(dateStr);
+			
+			//외부카드승인취소
+			Boolean successYn = false;
+			if(PayType.CARD.equals(pay.getPayType())){
+				
+				System.out.println("====================> card approval cancel call ");
+	            successYn = PaymentApplication.applicationContext.getBean(petfriends.external.ExternalService.class).card_cancel(pay.getCardApprovalNumber());
+	            System.out.println("====================> 최소성공여부 :  " + successYn );
+			
+	            if(successYn == false) {
+	            	new RuntimeException("카드 취소에 실패했습니다.");
+	            }
+			}
 			
 			if(PayType.POINT.equals(pay.getPayType())) {
 				
