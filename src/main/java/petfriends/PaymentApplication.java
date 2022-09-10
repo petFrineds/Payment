@@ -12,7 +12,7 @@ import petfriends.config.KafkaProcessor;
 @EnableBinding(KafkaProcessor.class)
 @EnableFeignClients
 public class PaymentApplication {
-    protected static ApplicationContext applicationContext;
+    public static ApplicationContext applicationContext;
     public static void main(String[] args) {
         applicationContext = SpringApplication.run(PaymentApplication.class, args);
     }
