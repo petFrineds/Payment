@@ -44,6 +44,7 @@ public class Payment {
     private String cardValidMonth;
     private String cardValidYear;
     private String cardCvc;
+    private String cardApprovalNumber;	
     private Double amount;
     private Double refundAmount;
     private String payDate;
