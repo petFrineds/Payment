@@ -46,10 +46,11 @@ logging:
       type.descriptor.sql: trace #show parameter binding
       SQL: DEBUG
     org.springframework.cloud: debug
-
 jwt:
   secret: bHYz66W8IOychO2VnCBwZXRmcmllbmRzIOydh
-
+api:
+  url:
+    external: http://localhost:8081
 ---
 spring:
   profiles: docker
@@ -93,6 +94,8 @@ logging:
       type.descriptor.sql: trace #show parameter binding
       SQL: DEBUG
     org.springframework.cloud: debug
-
 jwt:
   secret: bHYz66W8IOychO2VnCBwZXRmcmllbmRzIOydh
+api:
+  url:
+    external: http://external-backend:8080  
